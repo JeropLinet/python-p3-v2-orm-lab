@@ -156,9 +156,7 @@ class Employee:
             SELECT *
             FROM employees
         """
-
         rows = CURSOR.execute(sql).fetchall()
-
         return [cls.instance_from_db(row) for row in rows]
 
     @classmethod
@@ -181,10 +179,17 @@ class Employee:
             FROM employees
             WHERE name is ?
         """
-
         row = CURSOR.execute(sql, (name,)).fetchone()
         return cls.instance_from_db(row) if row else None
 
     def reviews(self):
         """Return list of reviews associated with current employee"""
-        pass
+        from review import Review
+        sql="""
+           SELECT *
+           FROM reviews
+           WHERE employee_id = ?
+        """
+        results = CURSOR.execute(sql, (self.id,)).fetchall()
+        reviews = [Review(*row) for row in results]
+        return reviews

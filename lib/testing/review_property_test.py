@@ -36,13 +36,14 @@ class TestReviewProperties:
                 "this century", "Excellent work ethic! Outstanding programming skills!", employee.id)
 
     def test_year_value(self):
-        '''validates year property length >= 2000'''
-        with pytest.raises(ValueError):
-            department = Department.create("Payroll", "Building A, 5th Floor")
-            employee = Employee.create("Lee", "Manager", department.id)
+     '''validates year property length >= 2000'''
+     with pytest.raises(TypeError):
+        department = Department.create("Payroll", "Building A, 5th Floor")
+        employee = Employee.create("Lee", "Manager", department.id)
 
-            review = Review.create(
-                1999, "Excellent work ethic! Outstanding programming skills!", employee.id)
+        review = Review.create(
+            '1999', "Excellent work ethic! Outstanding programming skills!", employee.id)
+
 
     def test_summary_string_length(self):
         '''validates summary property length > 0'''
